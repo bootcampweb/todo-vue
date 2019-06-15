@@ -6,7 +6,6 @@
           <v-img
             src="https://i.stack.imgur.com/3jASk.jpg"
             height="300px">
-
             <v-layout column fill-height>
               <v-spacer></v-spacer>
               <v-card-title class="white--text pl-5">
@@ -14,7 +13,15 @@
               </v-card-title>
             </v-layout>
           </v-img>
-
+          <v-btn fab
+            absolute
+            center
+            right
+            dark
+            color="pink"
+            @click="goToAddTodo">
+              <v-icon>add</v-icon>
+            </v-btn>
           <TodosList :todos="todos"></TodosList>
         </v-card>
       </v-flex>
@@ -47,6 +54,9 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    goToAddTodo() {
+      this.$router.push({ path: "add-todo" });
     }
   },
   async mounted() {

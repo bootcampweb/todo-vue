@@ -22,7 +22,7 @@
             @click="goToAddTodo">
               <v-icon>add</v-icon>
             </v-btn>
-          <TodosList :todos="todos" @clicked="onTodoClicked"></TodosList>
+          <TodosList :todos="todos" @clicked="onTodoClicked" @remove="onTodoRemove"></TodosList>
         </v-card>
       </v-flex>
     </v-layout>
@@ -40,7 +40,8 @@ export default {
   },
   data() {
     return {
-      todos: []
+      todos: [],
+      dialog: false
     };
   },
   methods: {
@@ -60,6 +61,9 @@ export default {
     },
     onTodoClicked(id) {
       this.$router.push({ path: `edit-todo/${id}` });
+    },
+    onTodoRemove(todo) {
+      console.log(todo);
     }
   },
   async mounted() {

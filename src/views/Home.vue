@@ -21,18 +21,20 @@ export default {
     };
   },
   methods: {
-    fetchTodos() {
-      this.axios
-        .get("https://shielded-chamber-71167.herokuapp.com/todos")
-        .then(res => {
-          const { data } = res;
-          this.todos = data;
-        })
-        .catch(err => console.log(err));
+    async fetchTodos() {
+      try {
+        const { data } = await this.axios.get(
+          "https://shielded-chamber-71167.herokuapp.com/todos"
+        );
+
+        this.todos = data;
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
-  mounted() {
-    this.fetchTodos();
+  async mounted() {
+    await this.fetchTodos();
   }
 };
 </script>

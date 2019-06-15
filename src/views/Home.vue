@@ -17,24 +17,22 @@ export default {
   },
   data() {
     return {
-      todos: [
-        {
-          id: 1,
-          title: "Lista 1",
-          created_by: "2"
-        },
-        {
-          id: 2,
-          title: "Lista 2",
-          created_by: "2"
-        },
-        {
-          id: 3,
-          title: "Lista 3",
-          created_by: "2"
-        }
-      ]
+      todos: []
     };
+  },
+  methods: {
+    fetchTodos() {
+      this.axios
+        .get("https://shielded-chamber-71167.herokuapp.com/todos")
+        .then(res => {
+          const { data } = res;
+          this.todos = data;
+        })
+        .catch(err => console.log(err));
+    }
+  },
+  mounted() {
+    this.fetchTodos();
   }
 };
 </script>

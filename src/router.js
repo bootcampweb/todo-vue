@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import EditTodo from './views/EditTodo.vue';
 
 Vue.use(Router);
 
@@ -24,6 +25,12 @@ export default new Router({
       path: '/add-todo',
       name: 'addTodo',
       component: () => import('./views/AddTodo.vue'),
+    },
+    {
+      path: '/edit-todo/:id',
+      name: 'editTodo',
+      component: EditTodo,
+      props: true,
     },
   ],
 });

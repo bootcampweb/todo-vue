@@ -27,18 +27,31 @@
 
 <script>
 export default {
+  props: {
+    selectedTodo: Object
+  },
   data() {
     return {
       valid: false,
       todo: {
+        id: "",
         title: "",
         created_by: "1"
       },
       titleRules: [
         v => !!v || "Informe um título",
-        v => v.length > 3 || "Título deve conter mais de 3 caracteres"
+        v => (!!v && v.length > 3) || "Título deve conter mais de 3 caracteres"
       ]
     };
+  },
+
+  watch: {
+    selectedTodo() {
+      if (this.selectedTodo) {
+        const { id, title, created_by } = this.selectedTodo;
+        this.todo = { id, title, created_by };
+      }
+    }
   },
 
   methods: {

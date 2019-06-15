@@ -22,7 +22,7 @@
             @click="goToAddTodo">
               <v-icon>add</v-icon>
             </v-btn>
-          <TodosList :todos="todos"></TodosList>
+          <TodosList :todos="todos" @clicked="onTodoClicked"></TodosList>
         </v-card>
       </v-flex>
     </v-layout>
@@ -57,6 +57,9 @@ export default {
     },
     goToAddTodo() {
       this.$router.push({ path: "add-todo" });
+    },
+    onTodoClicked(id) {
+      this.$router.push({ path: `edit-todo/${id}` });
     }
   },
   async mounted() {

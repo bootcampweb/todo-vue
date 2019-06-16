@@ -15,14 +15,14 @@
           </v-img>
           <v-btn fab
             absolute
-            center
+            top
             right
             dark
             color="pink"
             @click="goToAddTodo">
               <v-icon>add</v-icon>
             </v-btn>
-          <TodosList :todos="todos" @clicked="onTodoClicked" @remove="onTodoRemove"></TodosList>
+          <TodosList :todos="todos" @clicked="onTodoClicked" @removeItem="onTodoRemove"></TodosList>
         </v-card>
       </v-flex>
     </v-layout>
@@ -32,6 +32,7 @@
 <script>
 // @ is an alias to /src
 import TodosList from "@/components/TodosList.vue";
+import { log } from "util";
 
 export default {
   name: "home",
@@ -47,9 +48,8 @@ export default {
   methods: {
     async fetchTodos() {
       try {
-        const { data } = await this.axios.get(
-          "https://shielded-chamber-71167.herokuapp.com/todos"
-        );
+        const url = `${process.env.VUE_APP_API_BASE_URL}/todos`;
+        const { data } = await this.axios.get(url);
 
         this.todos = data;
       } catch (error) {
@@ -62,8 +62,16 @@ export default {
     onTodoClicked(id) {
       this.$router.push({ path: `edit-todo/${id}` });
     },
-    onTodoRemove(todo) {
-      console.log(todo);
+
+    async onTodoRemove(index, todo) {
+      try {
+        const url = `${process.env.VUE_APP_API_BASE_URL}/todos/${todo.id}`;
+        await this.axios.delete(url);
+
+        this.todos.splice(index, 1);
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
   async mounted() {

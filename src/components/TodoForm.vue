@@ -4,10 +4,14 @@
             <v-layout align-center>
                 <v-flex xs12>
                     <v-text-field
+                        ref="titleField"
                         v-model="todo.title"
                         label="Título"
                         required
                         :rules="titleRules"
+                        @keydown.enter="submit"
+                        :disabled="submited"
+                        :loading="submited"
                         >
                     </v-text-field>
                 </v-flex>
@@ -41,7 +45,8 @@ export default {
       titleRules: [
         v => !!v || "Informe um título",
         v => (!!v && v.length > 3) || "Título deve conter mais de 3 caracteres"
-      ]
+      ],
+      submited: false
     };
   },
 
@@ -54,9 +59,14 @@ export default {
     }
   },
 
+  mounted() {
+    this.$refs.titleField.focus();
+  },
+
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
+        this.submited = true;
         this.$emit("submited", this.todo);
       }
     }

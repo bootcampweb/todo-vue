@@ -22,8 +22,8 @@
 
     <v-dialog v-model="dialog" max-width="300" @keydown.esc="cancel">
       <v-card>
-        <v-toolbar dark dense flat>
-          <v-toolbar-title class="white--text">Remover Todo?</v-toolbar-title>
+        <v-toolbar dense flat>
+          <v-toolbar-title>Remover Todo?</v-toolbar-title>
         </v-toolbar>
         <v-card-text>Você deseja realmente remover este todo?</v-card-text>
         <v-card-actions class="pt-0">

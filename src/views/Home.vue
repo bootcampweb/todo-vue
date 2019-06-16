@@ -22,6 +22,13 @@
             @click="goToAddTodo">
               <v-icon>add</v-icon>
             </v-btn>
+
+          <v-progress-linear
+            class="loading-bar"
+            v-if="loading"
+            indeterminate
+          ></v-progress-linear>
+
           <TodosList :todos="todos" @clicked="onTodoClicked" @removeItem="onTodoRemove"></TodosList>
         </v-card>
       </v-flex>
@@ -42,16 +49,18 @@ export default {
   data() {
     return {
       todos: [],
-      dialog: false
+      loading: 0
     };
   },
   methods: {
     async fetchTodos() {
       try {
+        this.loading = true;
         const url = `${process.env.VUE_APP_API_BASE_URL}/todos`;
         const { data } = await this.axios.get(url);
 
         this.todos = data;
+        this.loading = false;
       } catch (error) {
         console.log(error);
       }
@@ -65,10 +74,12 @@ export default {
 
     async onTodoRemove(index, todo) {
       try {
+        this.loading = true;
         const url = `${process.env.VUE_APP_API_BASE_URL}/todos/${todo.id}`;
         await this.axios.delete(url);
 
         this.todos.splice(index, 1);
+        this.loading = false;
       } catch (error) {
         console.log(error);
       }
@@ -79,3 +90,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.loading-bar {
+  margin: 0;
+}
+</style>
